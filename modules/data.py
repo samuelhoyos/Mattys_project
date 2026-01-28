@@ -252,7 +252,9 @@ def bin_df(df: pd.DataFrame, filename: str, binnings: list = np.arange(30, 200, 
         return out
 
     file_path = data_path / filename
+    os.environ["TFWHM_FS"] = filename.split("tfwhm")[1].split("f")[0]
     S = happi.Open(f"{file_path}", verbose=False)
+    
     xmax, xmin = S.namelist.Lx, 0.0
     ymax, ymin = S.namelist.Ly, 0.0
     zmax, zmin = S.namelist.Lz, 0.0
@@ -274,6 +276,7 @@ def bin_df(df: pd.DataFrame, filename: str, binnings: list = np.arange(30, 200, 
 @memory.cache
 def get_density_dfs(df, filename: str, binnings: list = np.arange(30, 200, 5))->list:
     file_path = data_path / filename
+    os.environ["TFWHM_FS"] = filename.split("tfwhm")[1].split("f")[0]
     S = happi.Open(f"{file_path}", verbose=False)
     xmax, xmin = S.namelist.Lx, 0.0
     ymax, ymin = S.namelist.Ly, 0.0
