@@ -123,9 +123,31 @@ def plot_nmax_tfwhm(
     plt.tight_layout()
     plt.legend(loc="upper right", fontsize=25, frameon=False)
 
-def N_pon(N_pon:np.array, times:np.array, color:str):
-    
-    plt.plot(times*1e15, N_pon, color=color)
-    
+
+def N_pon(N_pon: np.array, times: np.array, color: str):
+
+    plt.plot(times * 1e15, N_pon, color=color)
 
 
+def times_end_of_collision(
+    end_of_collision_times: list,
+    tfwhm_list: list,
+    linestyle: str = "--",
+    linewidth: int = 3,
+    alpha: float = 1,
+):
+
+    cmap = plt.cm.tab20
+    n_curves = len(tfwhm_list)
+    colors = [cmap(i) for i in range(n_curves)]
+    # plt.figure(figsize=(12, 8))
+    for i, end_time in enumerate(end_of_collision_times):
+        plt.vlines(
+            x=(end_time) * 1e15,
+            ymin=0,
+            ymax=1,
+            color=colors[tfwhm_list.index(tfwhm_list[i])],
+            linestyle=linestyle,
+            linewidth=linewidth,
+            alpha=alpha,
+        )
